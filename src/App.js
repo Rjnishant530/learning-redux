@@ -1,11 +1,10 @@
 import logo from "./logo.svg";
 import "./App.css";
 import store from "./v3/store";
-import { addTask, removeTask, completeTask, fetchTask } from "./v3/tasks";
-
+import { loadTask } from "./v3/tasks";
 
 function App() {
-  store.dispatch(fetchTask())
+  store.dispatch(loadTask);
   return (
     <div className="App">
       <header className="App-header">

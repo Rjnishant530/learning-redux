@@ -1,26 +1,21 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-export const fetchTask = createAsyncThunk("fetchTask", async (a, rejectWithValue) => {
-  try {
-    const data = await fetch("http://localhost:5000/api/tasks");
-    const tasks = await data.json();
-    return { tasks };
-  } catch (error) {
-    return rejectWithValue({ error: error.message });
-  }
-});
+import { createSlice } from "@reduxjs/toolkit";
 
 var id = 0;
-const initialState = {
-  loading: false,
-  tasks: [],
-  error: null,
-};
 
 const taskSlice = createSlice({
   initialState,
   name: "tasks",
   reducers: {
+    apiRequested: (state, action) => {
+      state.loading = true;
+    },
+    apiRequestFailed: (state, action) => {
+      state.loading = false;
+    },
+    gettask: (state, action) => {
+      state.tasks = action.payload;
+      state.loading = false;
+    },
     addTask: (state, action) => {
       state.tasks.push({
         id: ++id,
@@ -32,23 +27,20 @@ const taskSlice = createSlice({
       state.tasks = state.tasks.filter((task) => task.id !== action.payload.id);
     },
     completeTask: (state, action) => {
-      state.tasks = state.tasks.map((v) => (v.id === action.payload.id ? { ...v, completed: true } : v));
-    },
-  },
-  extraReducers: {
-    [fetchTask.fulfilled]: (state, action) => {
-      state.tasks.push(...action.payload.tasks);
-      state.loading = false;
-    },
-    [fetchTask.pending]: (state, action) => {
-      state.loading = true;
-    },
-    [fetchTask.error]: (state, action) => {
-      state.error = action.payload.error;
-      state.loading = false;
+      return state.map((v) => (v.id === action.payload.id ? { ...v, completed: true } : v));
     },
   },
 });
 
-export const { addTask, removeTask, completeTask, putTask } = taskSlice.actions;
+export const { addTask, removeTask, completeTask } = taskSlice.actions;
 export default taskSlice.reducer;
+
+//Action creators
+
+export const loadTask = apiCallBegin({
+  url: "/tasks",
+  method: "GET",
+  onStart: apiRequested.type,
+  onSuccess: gettask.type,
+  onError: apiRequestFailed.type,
+});
