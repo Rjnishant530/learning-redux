@@ -39,6 +39,7 @@ const version3 = () => {
   store.dispatch(removeEmployee({ id: 1 }));
   store.dispatch(addEmployee({ name: "Nishant" }));
 
+  store.dispatch({type:"SHOW_ERROR",payload:{error:"Server Error"}})
   store.dispatch(addTask({ task: "Do Task" }));
   store.dispatch(removeTask({ id: 1 }));
   store.dispatch(addTask({ task: "Do EARN" }));
