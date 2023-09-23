@@ -1,6 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { apiCallBegin } from "./api";
 
 var id = 0;
+
+const initialState = {
+  loading: false,
+  tasks: [],
+  error:null
+}
 
 const taskSlice = createSlice({
   initialState,
@@ -32,11 +39,10 @@ const taskSlice = createSlice({
   },
 });
 
-export const { addTask, removeTask, completeTask } = taskSlice.actions;
+export const { addTask, removeTask, completeTask, apiRequested, gettask, apiRequestFailed } = taskSlice.actions;
 export default taskSlice.reducer;
 
 //Action creators
-
 export const loadTask = apiCallBegin({
   url: "/tasks",
   method: "GET",
