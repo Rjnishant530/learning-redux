@@ -4,9 +4,6 @@ import "./App.css";
 // import store from "./v1/store";
 // import { addTask, removeTask, completeTask } from "./v1/action";
 
-import { addTask, removeTask, completeTask } from "./v2/tasks";
-import store from "./v2/store";
-
 // const version1 = () => {
 // store.dispatch(addTask("Do Task"));
 // console.log(store.getState());
@@ -18,20 +15,40 @@ import store from "./v2/store";
 // console.log(store.getState());
 // }
 
-const version2 = () => {
+// import { addTask, removeTask, completeTask } from "./v2/tasks";
+// import store from "./v2/store";
+
+// const version2 = () => {
+//   store.dispatch(addTask({ task: "Do Task" }));
+//   console.log(store.getState());
+//   store.dispatch(removeTask({ id: 1 }));
+//   console.log(store.getState());
+//   store.dispatch(addTask({ task: "Do EARN" }));
+//   console.log(store.getState());
+//   store.dispatch(completeTask({ id: 2 }));
+//   console.log(store.getState());
+// };
+
+import { addEmployee, removeEmployee } from "./v3/employees";
+import { addTask, removeTask, completeTask } from "./v3/tasks";
+
+import store from "./v3/store";
+
+const version3 = () => {
+  store.dispatch(addEmployee({ name: "Rajni" }));
+  store.dispatch(removeEmployee({ id: 1 }));
+  store.dispatch(addEmployee({ name: "Nishant" }));
+
   store.dispatch(addTask({ task: "Do Task" }));
-  console.log(store.getState());
   store.dispatch(removeTask({ id: 1 }));
-  console.log(store.getState());
   store.dispatch(addTask({ task: "Do EARN" }));
-  console.log(store.getState());
   store.dispatch(completeTask({ id: 2 }));
-  console.log(store.getState());
 };
 
 function App() {
   // version1();
-  version2();
+  // version2();
+  version3();
   return (
     <div className="App">
       <header className="App-header">
